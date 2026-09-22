@@ -24,6 +24,14 @@
     if (el.textContent.trim()) el.classList.add('txt');
   });
 
+  /* ---------- 1c. phones held upright: the «turn your phone» screen shows once, at the start ---------- */
+  const land = matchMedia('(orientation: landscape)');
+  const done = () => { if (root.classList.contains('rotate-done')) return; root.classList.add('rotate-done');
+    window.LENIS && LENIS.start(); window.ScrollTrigger && ScrollTrigger.refresh(); };
+  if (land.matches) done();                                    // already landscape (or desktop): never shown
+  land.addEventListener('change', (e) => { if (e.matches) done(); });
+  document.querySelector('.rotate__skip')?.addEventListener('click', done);
+
   /* ---------- 2. videos play only while visible ---------- */
   const vio = new IntersectionObserver((es) => es.forEach((e) => {
     const v = e.target;
@@ -41,6 +49,7 @@
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
     window.LENIS = lenis;
+    if (!root.classList.contains('rotate-done') && getComputedStyle(document.querySelector('.rotate')).display !== 'none') lenis.stop();
   }
 
   /* ---------- 4. picture first, then type ---------- */

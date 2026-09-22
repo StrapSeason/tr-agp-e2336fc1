@@ -218,6 +218,13 @@
 </script>
 </head>
 <body>
+<div class="rotate" role="dialog" aria-modal="true" aria-labelledby="rotate-t">
+  <div class="rotate__in">
+    <svg class="rotate__phone" viewBox="0 0 64 64" aria-hidden="true"><rect x="20" y="8" width="24" height="48" rx="5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="32" cy="50" r="1.8" fill="currentColor"/></svg>
+    <p class="rotate__t" id="rotate-t">Поверните телефон,<br>чтобы посмотреть тритмент</p>
+  </div>
+  <button class="rotate__skip" type="button">Смотреть вертикально</button>
+</div>
 <canvas id="stage" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
 <main id="flow">
