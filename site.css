@@ -1,0 +1,65 @@
+/* Agusha On-the-Go'27 · Igor Popeliukh — treatment site wrap.
+   Layers: .grain (paper only) → main (slide plates) → #stage (three.js props placed ON the slides, transparent, no pointer). */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; background: #fcfcfb; }
+body { -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; overflow-x: hidden; }
+
+:root {
+  --paper: #fcfcfb;
+  --pw: min(92vw, calc((100svh - 7svh) * 16 / 9));   /* plate width: full width, but never taller than the viewport */
+}
+
+#stage { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 3;   /* stage.js drops it to 0 during the iris/rhyme pins */
+  pointer-events: none; display: block; }
+.grain {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .045; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main { position: relative; z-index: 2; padding: 4svh 0 18svh; }
+
+/* ── plates: the 1920×1080 slides, scaled by site.js ── */
+.plate {
+  position: relative; width: var(--pw); aspect-ratio: 16 / 9; margin: 0 auto; overflow: hidden;
+  background: #111; /* never seen; avoids a flash before the slide paints */
+}
+.plate > .slide { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; overflow: hidden; }
+.plate .abs { position: absolute; }
+
+.gap { height: var(--h, 12vh); }
+.interlude { height: var(--h, 70vh); }
+
+/* inside a slide: photos → background props → text and cards. Props sit behind the words and stay quiet. */
+.plate .slide .prop-tile { z-index: 1; pointer-events: none; filter: saturate(.7) contrast(.94) drop-shadow(0 16px 22px rgba(60,45,30,.14)); }
+.plate .slide .txt, .plate .slide .card { z-index: 2; }
+
+/* kid-wipe: a warm soft band crosses the plate while it is revealed */
+.wipe-band {
+  position: absolute; top: -2%; bottom: -2%; width: 22%; left: -22%; z-index: 5; pointer-events: none;
+  background: linear-gradient(90deg, rgba(58,40,30,0) 0%, rgba(58,40,30,.62) 38%, rgba(74,52,38,.7) 55%, rgba(58,40,30,0) 100%);
+  filter: blur(18px); opacity: 0;
+}
+
+/* ── pinned scenes: iris (06→07) and circle rhyme (10→11) ── */
+.pin { position: relative; height: 230svh; }
+.pin--rhyme { height: 260svh; }
+.pin__stick { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
+.iris-mask, .rhyme-mask { width: var(--pw); aspect-ratio: 16 / 9; position: relative;
+  clip-path: circle(var(--r, 0px) at var(--cx, 50%) var(--cy, 50%)); will-change: clip-path; }
+.plate--in-pin { width: 100%; }
+
+/* entrances start hidden only when JS is running (no-JS / reduced motion shows everything) */
+.js .reveal-img, .js .reveal-txt { opacity: 0; }
+
+@media (max-width: 700px) {
+  :root { --pw: calc(100vw - 32px); }
+  .interlude { height: calc(var(--h, 70vh) * .6); }
+  .pin { height: 170svh; } .pin--rhyme { height: 190svh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin, .pin--rhyme { height: auto; }
+  .pin__stick { position: static; height: auto; display: block; }
+  .iris-mask, .rhyme-mask { clip-path: none; margin: 0 auto; }
+  .js .reveal-img, .js .reveal-txt { opacity: 1; }
+  .interlude { height: 16vh; }
+}

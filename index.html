@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Igor Popeliukh — Агуша On-the-Go’27 — Director’s treatment</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23111' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="site.css">
+<style>
+/* ── slides (from deck-figma, scoped per slide) ── */
+
+/* ── s01.html ── */
+@font-face { font-family: "HN"; font-weight: 100; src: url("media/fonts/HelveticaNeue-Thin.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 300; src: url("media/fonts/HelveticaNeue-Light.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 400; src: url("media/fonts/HelveticaNeue-Roman.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 500; src: url("media/fonts/HelveticaNeue-Medium.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 700; src: url("media/fonts/HelveticaNeue-Bold.otf") format("opentype"); font-display: block; }
+  /* Slide 01 · cover — logic of figma/refs/ref-01.jpg (album spread, 1080×814 without the pin frame).
+     Photo column 42.2% → 0…810. White field 810…1920.
+     Top-right label block at 2.5% of height, right edge at 97.4% of the field.
+     One uniform text mass: 4 lines of one size, left at 2% of the field, filling its width,
+     sitting in the lower half (ref 52.1%…96.7%), line pitch = 1.25 × cap. The upper half is a pause. */
+  .s01 { background: #fff; color: #000; font-family: "HN", "Helvetica Neue", Arial, sans-serif; }
+  .s01 .cap   { text-box: trim-both cap alphabetic; line-height: 1; white-space: nowrap; }
+  .s01 .mono  { font-family: "HN", "Helvetica Neue", Arial, sans-serif; font-size: 16px; letter-spacing: .05em; text-transform: uppercase; }
+  .s01 .photo { left: 0; top: 0; width: 810px; height: 1080px; object-fit: cover; }
+  .s01 .mass  { font-size: 162px; font-weight: 700; letter-spacing: -.035em; }
+
+/* ── s02.html ── */
+@font-face { font-family: "HN"; font-weight: 100; src: url("media/fonts/HelveticaNeue-Thin.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 300; src: url("media/fonts/HelveticaNeue-Light.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 400; src: url("media/fonts/HelveticaNeue-Roman.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 500; src: url("media/fonts/HelveticaNeue-Medium.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 700; src: url("media/fonts/HelveticaNeue-Bold.otf") format("opentype"); font-display: block; }
+  /* Slide 02 · INTRO — logic of figma/refs/ref-02.png (2000×1652), not a pixel copy.
+     Whitespace table taken from the reference and scaled to 1080:
+       top margin 1.7% → 18 | wordmark 24.7% → 267 | PAUSE 28.1% → 303
+       label row 3.6% → 39 | pause 1.5% → 16 | photo mosaic 40.4% → 437
+     Columns (share of width → canvas x): 1.8% → 35 · 31.1% → 598 · 49.2% → 945 · 88.6% → 1701
+     Side margins stay tiny (1.5%) while the vertical pauses stay big — that contrast is the ref.
+     Copy is ≥30 px (legibility rule) and shortened so it still takes only ~half of the pause. */
+  .s02 { background: #eeeeee; color: #111; font-family: "HN", "Helvetica Neue", Arial, sans-serif; }
+  .s02 .cap   { text-box: trim-both cap alphabetic; line-height: 1; white-space: nowrap; }
+  .s02 .mark  { font-family: "HN", "Helvetica Neue", Arial, sans-serif; font-weight: 100; font-size: 310px;
+                letter-spacing: .846em; color: #e4e4e4; }
+  .s02 .mono  { font-size: 20px; font-weight: 400; letter-spacing: .05em; line-height: 1.45;
+                text-transform: uppercase; white-space: pre-line; }
+  .s02 .copy  { font-size: 16px; font-weight: 400; line-height: 1.5; color: #141414; column-count: 2; column-gap: 27px; }
+  .s02 .copy p { margin: 0 0 10px; }
+  .s02 .grain { left:0; top:0; width:1920px; height:1080px; object-fit:cover; opacity:.14; pointer-events:none; }
+  .s02 .tile  { object-fit: cover; }
+
+/* ── s03.html ── */
+@font-face { font-family: "HN"; font-weight: 100; src: url("media/fonts/HelveticaNeue-Thin.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 300; src: url("media/fonts/HelveticaNeue-Light.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 400; src: url("media/fonts/HelveticaNeue-Roman.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 500; src: url("media/fonts/HelveticaNeue-Medium.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 700; src: url("media/fonts/HelveticaNeue-Bold.otf") format("opentype"); font-display: block; }
+  /* Slide 03 · CHALLENGE — logic of figma/refs/ref-03.jpg (portfolio page 610×789 without the pin frame).
+     Heading and paragraph start at the page's centre line (50.5% → 960); the left half stays empty.
+     Heading cap ≈ 5.2% of the page width → 99 px. The paragraph sits one pause below the heading.
+     Photo band spans the full width with 1.5% margins and 1.5% gaps between three tiles (ref y 49.9…66.8%).
+     The frame has ONE picture, so it runs across the band as a triptych cut by two page-coloured gaps —
+     no picture is repeated. The lower third is a pause (the ref's contacts have no counterpart here). */
+  .s03 { background: #fcfcfb; color: #111; font-family: "HN", "Helvetica Neue", Arial, sans-serif; }
+  .s03 .cap  { text-box: trim-both cap alphabetic; line-height: 1; white-space: nowrap; }
+  .s03 .head { font-size: 136px; font-weight: 500; letter-spacing: -.035em; }
+  .s03 .lede { font-size: 16px; font-weight: 400; line-height: 1.5; color: #1d1d1d; }
+  .s03 .gap  { background: #fcfcfb; }
+
+/* ── s04.html ── */
+@font-face { font-family: "HN"; font-weight: 100; src: url("media/fonts/HelveticaNeue-Thin.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 300; src: url("media/fonts/HelveticaNeue-Light.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 400; src: url("media/fonts/HelveticaNeue-Roman.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 500; src: url("media/fonts/HelveticaNeue-Medium.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 700; src: url("media/fonts/HelveticaNeue-Bold.otf") format("opentype"); font-display: block; }
+  /* Slide 04 · APPROACH — logic of figma/refs/ref-04.jpg (editorial spread 1056×746 without the pin frame).
+     Big picture flush in the top-left corner: 0…49.3% × 0…49% → 0…947 × 0…529 (the frame's GIF).
+     Justified text column: 67%…98.8% of width from 2.5% of height → 1286…1897, top 27.
+     Small picture floating low-left: 17.8%…32.9% × 86%…98% → 342…632 × 929…1059.
+     Title small, bottom right, centred on 75.6% → x 1452, y ≈ 95%.
+     The lower-left quadrant and the middle stay empty. The frame's tape and ripped-paper textures are
+     decoration and stay out; its grain «25 4» sits as a faint overlay. */
+  .s04 { background: #fff; color: #111; font-family: "HN", "Helvetica Neue", Arial, sans-serif; }
+  .s04 .cap   { text-box: trim-both cap alphabetic; line-height: 1; white-space: nowrap; }
+  .s04 .col   { font-size: 16px; font-weight: 400; line-height: 1.5; color: #1a1a1a;
+                text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+  .s04 .col p { margin: 0 0 8px; text-indent: 1.5em; }
+  .s04 .col p:first-child { text-indent: 0; }
+  .s04 .title { font-size: 136px; font-weight: 500; letter-spacing: -.035em; }
+  .s04 .grain { left:0; top:0; width:1920px; height:1080px; object-fit:cover; opacity:.10; pointer-events:none; }
+
+/* ── s05.html ── */
+@font-face { font-family: "HN"; font-weight: 100; src: url("media/fonts/HelveticaNeue-Thin.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 300; src: url("media/fonts/HelveticaNeue-Light.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 400; src: url("media/fonts/HelveticaNeue-Roman.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 500; src: url("media/fonts/HelveticaNeue-Medium.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 700; src: url("media/fonts/HelveticaNeue-Bold.otf") format("opentype"); font-display: block; }
+  /* Slide 05 · LOOK & FEEL — logic of figma/refs/ref-05.jpg (1000×750).
+     Full-bleed picture underneath (the frame's GIF). A card floats over it:
+     white half 18.7%…43.2% × 20.2%…79.6% → 359…829 × 218…860; its text sits in the centre.
+     The card's photo half (43.2%…81.3%) needs a second picture the frame doesn't have —
+     it stays open, so the video underneath shows through. */
+  .s05 { background: #111; color: #111; font-family: "HN", "Helvetica Neue", Arial, sans-serif; }
+  .s05 .card  { left: 359px; top: 218px; width: 470px; height: 642px; background: #fff; box-sizing: border-box; }
+  .s05 .h     { position: absolute; left: 48px; top: 48px; margin: 0; font-size: 96px; font-weight: 400;
+                letter-spacing: -.025em; line-height: .96; }
+  .s05 .t     { position: absolute; left: 48px; right: 48px; bottom: 44px; margin: 0; font-size: 16px;
+                font-weight: 400; line-height: 1.5; color: #1a1a1a; }
+
+/* ── s06.html ── */
+@font-face { font-family: "HN"; font-weight: 100; src: url("media/fonts/HelveticaNeue-Thin.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 300; src: url("media/fonts/HelveticaNeue-Light.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 400; src: url("media/fonts/HelveticaNeue-Roman.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 500; src: url("media/fonts/HelveticaNeue-Medium.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 700; src: url("media/fonts/HelveticaNeue-Bold.otf") format("opentype"); font-display: block; }
+  /* Slide 06 · LOOK & FEEL — logic of «триты для ыы» pin 12fef7e6… (Nadia Lee Cohen portfolio page):
+     four pictures hung from one top line with ragged bottoms (55/40/48/53 % of height), then a
+     full-width band of white air, a name block low-left and short labels aligned under the photos.
+     Here: heading in the name slot, the three paragraphs in three of the label slots, each under its
+     photo's left edge and bottom-aligned; the rest of the pin's labels stay empty. */
+  .s06 { background: #fcfcfb; color: #111; font-family: "HN", "Helvetica Neue", Arial, sans-serif; }
+  .s06 .cap  { text-box: trim-both cap alphabetic; line-height: 1; white-space: nowrap; }
+  .s06 .ph   { object-fit: cover; }
+  .s06 .h    { font-size: 110px; font-weight: 500; letter-spacing: -.035em; }
+  .s06 .p    { font-size: 16px; line-height: 1.4; font-weight: 400; }
+
+/* ── s07.html ── */
+@font-face { font-family: "HN"; font-weight: 100; src: url("media/fonts/HelveticaNeue-Thin.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 300; src: url("media/fonts/HelveticaNeue-Light.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 400; src: url("media/fonts/HelveticaNeue-Roman.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 500; src: url("media/fonts/HelveticaNeue-Medium.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 700; src: url("media/fonts/HelveticaNeue-Bold.otf") format("opentype"); font-display: block; }
+  /* Slide 07 · LOOK & FEEL — logic of figma/refs/ref-07.gif (1600×1200, a single frame).
+     Full-bleed picture (the frame's photo). Three equal cards across the middle:
+     y 22.8%…76.7% → 246…828; x 5.7–33.4 | 35.6–63.9 | 66.4–94.1% → 109–641 | 684–1227 | 1275–1807.
+     Left card white, heading set big in regular caps from its top-left corner;
+     right card pale and translucent, text in justified caps, top-aligned.
+     The middle card is a photo in the ref — the frame has no second picture, so that slot stays open
+     and the photo underneath shows through it. */
+  .s07 { background: #222; color: #111; font-family: "HN", "Helvetica Neue", Arial, sans-serif; }
+  .s07 .cap   { text-box: trim-both cap alphabetic; line-height: 1; white-space: nowrap; }
+  .s07 .card  { top: 246px; height: 582px; width: 532px; box-sizing: border-box; }
+  .s07 .white { left: 109px; background: #f4f4f2; }
+  .s07 .pale  { left: 1275px; background: rgba(238,238,236,.86); padding: 26px; }
+  .s07 .big   { font-size: 120px; font-weight: 400; letter-spacing: -.025em; }
+  .s07 .caps  { margin: 0; font-size: 16px; font-weight: 400; line-height: 1.35; text-transform: uppercase;
+                text-align: justify; letter-spacing: .005em; color: #222; }
+
+/* ── s08.html ── */
+@font-face { font-family: "HN"; font-weight: 100; src: url("media/fonts/HelveticaNeue-Thin.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 300; src: url("media/fonts/HelveticaNeue-Light.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 400; src: url("media/fonts/HelveticaNeue-Roman.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 500; src: url("media/fonts/HelveticaNeue-Medium.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 700; src: url("media/fonts/HelveticaNeue-Bold.otf") format("opentype"); font-display: block; }
+  /* Slide 08 · VISUAL — logic of «триты» crop 253-c (THE RADD «SHOPPING»): one giant black word on a
+     light-grey field, three pictures overlapping its lower edge (glass over string-bag, a taller portrait
+     standing apart), the lower-left block and the right strip left empty (the pin's micro-labels and logo
+     are not copied). No condensed cut in the system — Helvetica Neue Bold at ~500 px. */
+  .s08 { background: #eeeeee; color: #111; font-family: "HN", "Helvetica Neue", Arial, sans-serif; }
+  .s08 .cap  { text-box: trim-both cap alphabetic; line-height: 1; white-space: nowrap; }
+  .s08 .word { font-size: 500px; font-weight: 700; letter-spacing: -.03em; }
+  .s08 .ph   { object-fit: cover; }
+
+/* ── s09.html ── */
+@font-face { font-family: "HN"; font-weight: 100; src: url("media/fonts/HelveticaNeue-Thin.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 300; src: url("media/fonts/HelveticaNeue-Light.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 400; src: url("media/fonts/HelveticaNeue-Roman.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 500; src: url("media/fonts/HelveticaNeue-Medium.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 700; src: url("media/fonts/HelveticaNeue-Bold.otf") format("opentype"); font-display: block; }
+  /* Slide 09 · (no heading) — logic of danya pin 0fb4066c… (interview spread): a flat colour panel
+     (32.3 % of width) with a small indented text column on its 40.5 % line, a dominant photo bleeding
+     top/right/bottom. The panel colour is the dusty-rose curtain of f09-i1 itself (#9f7973 sampled,
+     lifted 15 % toward milky), not the pin's pink. The pin's giant «06» and «−14» numerals and its
+     micro-labels are not copied — that space stays pure colour. */
+  .s09 { background: #ac8b84; color: #111; font-family: "HN", "Helvetica Neue", Arial, sans-serif; }
+  .s09 .t { font-size: 16px; line-height: 1.4; font-weight: 400; text-indent: 32px; margin: 0; }
+
+/* ── s10.html ── */
+@font-face { font-family: "HN"; font-weight: 100; src: url("media/fonts/HelveticaNeue-Thin.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 300; src: url("media/fonts/HelveticaNeue-Light.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 400; src: url("media/fonts/HelveticaNeue-Roman.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 500; src: url("media/fonts/HelveticaNeue-Medium.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 700; src: url("media/fonts/HelveticaNeue-Bold.otf") format("opentype"); font-display: block; }
+  /* Slide 10 · (no heading) — logic of «триты» pin bed68dfe… (#262): a full-bleed frame under a thin
+     full-length grid (verticals 14.5/32/50/68/86 %, horizontals 23/50/77 %), type confined to one cell — the calmest one (bottom row, 2nd column, dark grass, measured).
+     The pin's big numerals and labels are dropped; its acid line colour becomes translucent milky so
+     the photo keeps its own colour. The grid reads as a viewfinder / storyboard sheet — the copy is
+     about the edit. */
+  .s10 { background: #222; color: #111; font-family: "HN", "Helvetica Neue", Arial, sans-serif; }
+  .s10 .ln { background: rgba(252,252,251,.45); }
+  .s10 .t  { font-size: 16px; line-height: 1.4; font-weight: 400; margin: 0; color: #f6f1e6; }
+
+/* ── s11.html ── */
+@font-face { font-family: "HN"; font-weight: 100; src: url("media/fonts/HelveticaNeue-Thin.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 300; src: url("media/fonts/HelveticaNeue-Light.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 400; src: url("media/fonts/HelveticaNeue-Roman.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 500; src: url("media/fonts/HelveticaNeue-Medium.otf") format("opentype"); font-display: block; }
+  @font-face { font-family: "HN"; font-weight: 700; src: url("media/fonts/HelveticaNeue-Bold.otf") format("opentype"); font-display: block; }
+  /* Slide 11 · closing — logic of «триты» pin 349f4cde… (Yohji Yamamoto hero): a picture held in a circle
+     on a black field, the name crossing the circle's lower arc. The GIF's lower edge is mid-tone floor, so a
+     crossing line can't stay legible — the name hugs the arc instead (18 px below it). Here the frame's own GIF plays in the circle (the film's last circle: tube → bucket
+     → cap), and the cover's exact words come back as the bookend. The pin's shop nav, kanji, quote and
+     outline marquee are not copied. */
+  .s11 { background: #111; color: #f6f1e6; font-family: "HN", "Helvetica Neue", Arial, sans-serif; }
+  .s11 .cap  { text-box: trim-both cap alphabetic; line-height: 1; white-space: nowrap; }
+  .s11 .ring { left: 610px; top: 96px; width: 700px; height: 700px; border-radius: 50%; overflow: hidden; }
+  .s11 .big  { font-size: 120px; font-weight: 700; letter-spacing: -.02em; left: 960px; transform: translateX(-50%); }
+  .s11 .dark { color: #111; }
+
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<main id="flow">
+<div class="plate plate--cover" data-n="1"><section data-slide="1" style="--w:1920; --h:1080" class="slide s01" id="cover" aria-label="Обложка: Igor Popeliukh, режиссёрский тритмент">
+  <img class="abs photo" src="media/fig/f01-i1.jpg" alt="Кадр из ролика: девочка дома">
+  <div class="abs mono" style="right:64px; top:48px">SEPTEMBER 2026</div>
+
+  <div class="abs cap mass" style="left:832px; top:482px">IGOR</div>
+  <div class="abs cap mass" style="left:832px; top:623px">POPELIUKH</div>
+  <div class="abs cap mass" style="left:832px; top:764px">( DIRECTOR’S</div>
+  <div class="abs cap mass" style="left:832px; top:905px">TREATMENT )</div>
+</section></div>
+<div class="gap" style="--h:14vh"></div>
+<div class="plate plate--wipe" data-n="2"><section data-slide="2" style="--w:1920; --h:1080" class="slide s02" id="intro" aria-label="INTRO — от режиссёра">
+  <img class="abs grain" src="media/fig/f02-i1.png" alt="">
+
+  <!-- band 1: wordmark, cap top 18, cap height 267 -->
+  <div class="abs cap mark" style="left:15px; top:23px">INTRO</div>
+
+  <!-- band 2: the pause 285…588. Copy is small (16 px) and takes a slice of it; the rest stays empty. -->
+  <div class="abs copy" style="left:598px; top:350px; width:667px"><p>В полтора года всё происходит впервые. Первая «моя» ложка, первое «нет», первый костюм, который не снимешь ни за что. Взрослым такой выбор кажется смешным — для малыша важнее него нет ничего.</p><p>Я хочу снять ролик так, чтобы мы поверили Самату. Не умилялись со стороны, а на двадцать секунд оказались на его высоте: там, где стол выше головы, мамины руки появляются сверху, а жирафий капюшон — лучшая одежда для прогулки.</p><p>Сценарий уже знает, что главный здесь ребёнок. Моя задача — чтобы это было видно в каждом кадре: в камере, в свете, в монтаже.</p></div>
+
+  <img class="abs" src="media/fig/f02-i5.png" alt=""
+       style="left:1720px; top:356px; width:150px; height:131px; object-fit:contain">
+
+  <!-- band 4: mosaic 643…1080, tile widths from the reference -->
+  <img class="abs tile" src="media/fig/f02-i4.png" alt="Кадр: кухня, утро, мама и малыш"
+       style="left:35px;   top:643px; width:323px; height:380px">
+  <img class="abs tile" src="media/fig/f02-i2.png" alt="Кадр: мама кормит дочку"
+       style="left:369px;  top:643px; width:325px; height:380px">
+  <img class="abs tile" src="media/fig/f02-i3.jpg" alt="Кадр: малыш за столом"
+       style="left:705px;  top:643px; width:327px; height:346px">
+  <video class="abs tile loop" muted playsinline loop autoplay preload="none" poster="media/fig/f02-g1.jpg"
+         style="left:1036px; top:643px; width:652px; height:437px">
+    <source src="media/fig/f02-g1.webm" type="video/webm"><source src="media/fig/f02-g1.mp4" type="video/mp4">
+  </video>
+  <img class="abs tile" src="media/fig/f02-i6.jpg" alt="Кадр: комната, вечерний свет"
+       style="left:1701px; top:643px; width:219px; height:380px">
+</section></div>
+<div class="gap" style="--h:14vh"></div>
+<div class="plate" data-n="3"><section data-slide="3" style="--w:1920; --h:1080" class="slide s03" id="challenge" aria-label="CHALLENGE — задача ролика">
+  <div class="abs cap head" style="left:960px; top:119px">CHALLENGE</div>
+  <div class="abs lede" style="left:960px; top:290px; width:420px">Двадцать секунд, тринадцать событий и малыш, который не умеет играть по команде. Значит, снимаем не постановку, а то, что с ним правда происходит.</div>
+
+  <div class="abs" style="left:29px; top:560px; width:1862px; height:300px; overflow:hidden">
+    <img src="media/fig/f03-i1.jpg" alt="Кадр: мальчик смотрит в камеру"
+         style="position:absolute; left:-29px; top:-400px; width:2400px; height:auto">
+  </div>
+  <div class="abs gap" style="left:630px;  top:560px; width:29px; height:300px"></div>
+  <div class="abs gap" style="left:1261px; top:560px; width:29px; height:300px"></div>
+</section></div>
+<div class="gap" style="--h:14vh"></div>
+<div class="plate" data-n="4"><section data-slide="4" style="--w:1920; --h:1080" class="slide s04" id="approach" aria-label="APPROACH — подход">
+  <video class="abs loop" muted playsinline loop autoplay preload="none" poster="media/fig/f04-g1.jpg"
+         style="left:0; top:0; width:947px; height:529px; object-fit:cover">
+    <source src="media/fig/f04-g1.webm" type="video/webm"><source src="media/fig/f04-g1.mp4" type="video/mp4">
+  </video>
+
+  <div class="abs col" lang="ru" style="left:1284px; top:64px; width:540px">
+    <p>Камера живёт на высоте Самата — 70⁠–⁠90 см от пола. Мы не смот­рим на него сверху, как обычно смот­рят на детей в ре­кла­ме, а идём рядом. Взрос­лые по­па­да­ют в кадр так, как он их видит: колени, руки — и лица, когда они на­кло­ня­ют­ся к нему.</p>
+    <p>Камера А — ручная или гимбал, 24⁠–⁠35 мм, вплот­ную к ребён­ку. Камера Б — на­блю­да­тель с длин­ным объ­ек­ти­вом из-за края пло­щад­ки: малыш её не за­ме­ча­ет, а ро­ди­те­ли не играют, а просто смот­рят на своего ребён­ка.</p>
+    <p>Обе пишут весь блок и между дуб­ля­ми: лучшая ре­ак­ция слу­ча­ет­ся, когда все решили, что сни­мать за­кон­чи­ли.</p>
+  </div>
+
+  <img class="abs" src="media/fig/f04-i5.jpg" alt="Кадр: девочка тянет руку к камере, мама за ней"
+       style="left:342px; top:716px; width:540px; height:300px; object-fit:cover; object-position:50% 45%">
+
+  <div class="abs cap title" style="right:96px; top:919px">APPROACH</div>
+
+  <img class="abs grain" src="media/fig/f02-i1.png" alt="">
+</section></div>
+<div class="gap" style="--h:14vh"></div>
+<div class="plate" data-n="5"><section data-slide="5" style="--w:1920; --h:1080" class="slide s05" id="look-feel-1" aria-label="LOOK &amp; FEEL — тон">
+  <video class="abs loop" muted playsinline loop autoplay preload="none" poster="media/fig/f05-g1.jpg"
+         style="left:0; top:0; width:1920px; height:1080px; object-fit:cover">
+    <source src="media/fig/f05-g1.webm" type="video/webm"><source src="media/fig/f05-g1.mp4" type="video/mp4">
+  </video>
+  <div class="abs card">
+    <p class="h">LOOK&nbsp;&amp;<br>FEEL</p>
+    <p class="t">Весело, солнечно, без сахара. Эмоции настоящие, пойманные, а не сыгранные: мы снимаем как документалисты, которых пустили в очень счастливую семью. Смешное рождается из контраста — серьёзное лицо под жирафьими рожками.</p>
+  </div>
+</section></div>
+<div class="gap" style="--h:14vh"></div>
+<div class="plate" data-n="6"><section data-slide="6" style="--w:1920; --h:1080" class="slide s06" id="look-feel-2" aria-label="LOOK &amp; FEEL — свет и цвет">
+  <img class="abs ph" src="media/fig/f06-i5c.jpg" alt="Кадр сверху: мама и малыш на кровати в тёплом свете"
+       style="left:24px;   top:48px; width:557px; height:598px; object-position:42% 55%">
+  <img class="abs ph" src="media/fig/f06-i3.jpg" alt="Босые ножки малыша на ковре, камера у самого пола"
+       style="left:597px;  top:48px; width:383px; height:432px; object-position:40% 50%">
+  <img class="abs ph" src="media/fig/f02-i6.jpg" alt="Малыш ползёт по коридору к свету"
+       style="left:996px;  top:48px; width:451px; height:514px; object-position:30% 60%">
+  <img class="abs ph" src="media/fig/f03-i1.jpg" alt="Мальчик крупно смотрит в камеру"
+       style="left:1463px; top:48px; width:433px; height:574px; object-position:38% 40%">
+
+  <div class="abs cap h" style="left:64px; top:820px">LOOK &amp;</div>
+  <div class="abs cap h" style="left:64px; top:938px">FEEL</div>
+
+  <p class="abs p" style="left:597px;  bottom:64px; width:340px; margin:0">Лето, солнце в контровом сквозь листву. Высокий ключ, лёгкая дымка по краям кадра, прозрачные тени. Снимаем в режимное время, утром и ближе к вечеру, когда солнце мягкое, а детские лица чистые.</p>
+  <p class="abs p" style="left:996px;  bottom:64px; width:380px; margin:0">Дома — большие окна, тюль и солнечное пятно на полу, через которое пробегает Самат.</p>
+  <p class="abs p" style="left:1463px; bottom:64px; width:369px; margin:0">Цвет плотный и естественный: молочный, песочный, сочная зелень, пыльно-голубой плед. Оранжевый — только у Самата: рюкзак, сандалии, упаковка. Так глаз всегда находит героя.</p>
+</section></div>
+<section class="pin pin--iris" data-scene="iris" aria-label="Переход: взгляд через тубу">
+     <div class="pin__stick"><div class="iris-mask"><div class="plate plate--in-pin" data-n="7"><section data-slide="7" style="--w:1920; --h:1080" class="slide s07" id="look-feel-3" aria-label="LOOK &amp; FEEL — мир и вещи Самата">
+  <img class="abs" src="media/fig/f07-i1.png" alt="Кадр: двое детей лежат на траве"
+       style="left:0; top:0; width:1920px; height:1080px; object-fit:cover">
+  <div class="abs card white"></div>
+  <div class="abs cap big" style="left:135px; top:274px">LOOK &amp;</div>
+  <div class="abs cap big" style="left:135px; top:406px">FEEL</div>
+  <div class="abs card pale">
+    <p class="caps">Две ло­ка­ции: свет­лая го­сти­ная и парк, где пло­щад­ка, пе­соч­ни­ца и по­лян­ка стоят рядом. Вещи здесь — сюжет: жи­ра­фий ки­гу­ру­ми, туба с ка­ра­ку­ля­ми, оран­же­вый рюк­за­чок, клет­ча­тый плед. У каждой вещи свой круп­ный план.</p>
+  </div>
+</section></div></div></div>
+   </section>
+<div class="gap" style="--h:14vh"></div>
+<div class="plate" data-n="8"><section data-slide="8" style="--w:1920; --h:1080" class="slide s08" id="visual" aria-label="VISUAL">
+  <div class="abs cap word" style="left:52px; top:96px">VISUAL</div>
+  <img class="abs ph" src="media/fig/f02-i6.jpg" alt="Малыш ползёт по коридору к свету"
+       style="left:820px;  top:400px; width:330px; height:350px; object-position:35% 60%">
+  <img class="abs ph" src="media/fig/f04-i5.jpg" alt="Девочка тянет руку к камере, мама за ней"
+       style="left:1050px; top:620px; width:330px; height:350px; object-position:62% 50%">
+  <img class="abs ph" src="media/fig/f08-i2.jpg" alt="Малыш идёт, держась за руки взрослого, в светлой гостиной"
+       style="left:1250px; top:300px; width:400px; height:600px; object-position:60% 50%">
+</section></div>
+<div class="gap" style="--h:14vh"></div>
+<div class="plate" data-n="9"><section data-slide="9" style="--w:1920; --h:1080" class="slide s09" id="play" aria-label="Как мы работаем с ребёнком">
+  <img class="abs" src="media/fig/f09-i1.jpg" alt="Малышка у окна в розовой комнате, блестящие туфельки на полу"
+       style="left:620px; top:0; width:1300px; height:1080px; object-fit:cover; object-position:30% 50%">
+  <p class="abs t" style="left:192px; top:437px; width:390px">С Саматом не репетируют — с ним играют. Папа рычит первым, и Самат отвечает. Ведёрко звучит, если по нему постучать. Замок мы строим вместе, чтобы ему самому захотелось его разрушить. Мама всегда в шаге от кадра.</p>
+</section></div>
+<div class="gap" style="--h:14vh"></div>
+<div class="plate plate--wipe" data-n="10"><section data-slide="10" style="--w:1920; --h:1080" class="slide s10" id="edit" aria-label="Монтаж и звук">
+  <img class="abs" src="media/fig/f10-i1.jpg" alt="Рыжая девочка смеётся в широкоугольный объектив"
+       style="left:0; top:0; width:1920px; height:1080px; object-fit:cover">
+  <div class="abs ln" style="left:278px; top:0; width:1px; height:1080px"></div>
+  <div class="abs ln" style="left:614px; top:0; width:1px; height:1080px"></div>
+  <div class="abs ln" style="left:960px; top:0; width:1px; height:1080px"></div>
+  <div class="abs ln" style="left:1306px; top:0; width:1px; height:1080px"></div>
+  <div class="abs ln" style="left:1651px; top:0; width:1px; height:1080px"></div>
+  <div class="abs ln" style="left:0; top:248px; width:1920px; height:1px"></div>
+  <div class="abs ln" style="left:0; top:540px; width:1920px; height:1px"></div>
+  <div class="abs ln" style="left:0; top:832px; width:1920px; height:1px"></div>
+  <p class="abs t" style="left:300px; top:852px; width:294px">Монтаж прячется в движении: Самат пробегает вплотную к объективу и закрывает кадр собой. Круг рифмуется — туба, ведёрко, крышечка дой-пака. Первый звук ролика — звонкий детский рык, последний — джингл, которым он дирижирует.</p>
+</section></div>
+<section class="pin pin--rhyme" data-scene="rhyme" aria-label="Переход: рифма круга">
+     <div class="pin__stick"><div class="rhyme-mask"><div class="plate plate--in-pin" data-n="11"><section data-slide="11" style="--w:1920; --h:1080" class="slide s11" id="closing" aria-label="Igor Popeliukh — режиссёрский тритмент">
+  <div class="abs ring">
+    <video class="loop" muted playsinline loop autoplay preload="none" poster="media/fig/f11-g1.jpg"
+           style="width:100%; height:100%; object-fit:cover; object-position:55% 42%">
+      <source src="media/fig/f11-g1.webm" type="video/webm"><source src="media/fig/f11-g1.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="abs cap big" style="top:814px">IGOR POPELIUKH</div>
+  <div class="abs cap big" style="top:930px">( DIRECTOR’S TREATMENT )</div>
+</section></div></div></div>
+   </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
+<script src="site.js"></script>
+<script type="module" src="stage.js"></script>
+</body>
+</html>
