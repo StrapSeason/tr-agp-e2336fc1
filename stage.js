@@ -145,7 +145,9 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
   }
   function drawTile(b, e, leave) {
     const p = inst[b.prop]; if (!p) return;
-    const W = Math.max(2, Math.round(b.plate.clientWidth * DPR)), H = Math.max(2, Math.round(b.plate.clientHeight * DPR));
+    // slide px, whatever way the plate lies (a turned phone stands the plate on its side)
+    const pw = b.plate.clientWidth, ph = b.plate.clientHeight;
+    const W = Math.max(2, Math.round(Math.max(pw, ph) * DPR)), H = Math.max(2, Math.round(Math.min(pw, ph) * DPR));
     const q = REDUCED ? b.pose(99, 0) : b.pose(e, TOUCH ? 0 : leave);
     const key = [W, H, (q.dy || 0).toFixed(1), (q.dz || 0).toFixed(3), (q.dyaw || 0).toFixed(3), (q.roll || 0).toFixed(3)].join();
     if (key === b.key) return;                                  // nothing moved: keep the last frame
@@ -216,7 +218,7 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
     for (const b of BG) {
       if (!b.cv) continue;
       const r = inView(b.plate); if (!r) continue;
-      if (b.gate === 'iris' && !REDUCED && S.iris < 0.92) { if (b.key !== 'hidden') { b.ctx.clearRect(0, 0, b.cv.width, b.cv.height); b.key = 'hidden'; } continue; }
+      if (b.gate === 'iris' && !REDUCED && !document.documentElement.classList.contains('turned') && S.iris < 0.92) { if (b.key !== 'hidden') { b.ctx.clearRect(0, 0, b.cv.width, b.cv.height); b.key = 'hidden'; } continue; }
       if (b.t0 === null && (b.play === 'load' || r.top < innerHeight * 0.8)) b.t0 = performance.now();
       if (b.t0 === null) continue;
       drawTile(b, (performance.now() - b.t0) / 1000, clamp01(-r.top / r.height));

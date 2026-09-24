@@ -12,9 +12,18 @@
   function fit() {
     for (const p of plates) {
       const s = p.querySelector('.slide');
-      if (s) s.style.transform = `scale(${p.clientWidth / 1920})`;
+      if (!s) continue;
+      const w = p.clientWidth;
+      // turned: the slide lies on its side — its top edge along the right side of the screen, its width down the page
+      s.style.transform = root.classList.contains('turned')
+        ? `translate(${w}px, 0) rotate(90deg) scale(${w / 1080})` : `scale(${w / 1920})`;
     }
   }
+  // phones held upright: lay the slides on their side (works with the rotation lock on and in in-app browsers)
+  const upright = matchMedia('(orientation: portrait) and (pointer: coarse) and (max-width: 600px)');
+  const onMQ = (mq, fn) => (mq.addEventListener ? mq.addEventListener('change', fn) : mq.addListener(fn));
+  root.classList.toggle('turned', upright.matches);
+  onMQ(upright, () => { root.classList.toggle('turned', upright.matches); fit(); window.ScrollTrigger && ScrollTrigger.refresh(); });
   fit();
   // phones change the height while scrolling (address bar): only a new width re-fits and re-measures
   let lastW = innerWidth;
@@ -44,8 +53,8 @@
   const done = () => { if (root.classList.contains('rotate-done')) return; root.classList.add('rotate-done');
     window.LENIS && LENIS.start(); window.ScrollTrigger && ScrollTrigger.refresh(); };
   if (land.matches) done();                                    // already landscape (or desktop): never shown
-  land.addEventListener('change', (e) => { if (e.matches) done(); });
-  document.querySelector('.rotate__skip')?.addEventListener('click', done);
+  onMQ(land, (e) => { if (e.matches) done(); });
+  document.querySelector('.rotate')?.addEventListener('click', done);        // a tap anywhere lets the reader in
 
   /* ---------- 2. videos play only while visible ---------- */
   const vio = new IntersectionObserver((es) => es.forEach((e) => {
@@ -101,7 +110,12 @@
   plates.forEach((plate) => {
     const parts = prepare(plate);
     if (plate.classList.contains('plate--cover')) { play(plate, parts, 0.25); return; }
-    if (plate.closest('.pin')) { plate._parts = parts; return; }    // pinned plates reveal with their scene
+    if (plate.closest('.pin')) {    // pinned plates reveal with their scene; on a turned phone the scenes are off, so on entering
+      plate._parts = parts;
+      ScrollTrigger.create({ trigger: plate, start: 'top 78%', once: true,
+        onEnter: () => { if (root.classList.contains('turned') && !plate._shown) { plate._shown = true; play(plate, parts); } } });
+      return;
+    }
     ScrollTrigger.create({ trigger: plate, start: 'top 78%', once: true, onEnter: () => play(plate, parts) });
   });
 
@@ -122,7 +136,6 @@
     const pin = document.querySelector(sel); if (!pin) return;
     const mask = pin.querySelector('.iris-mask, .rhyme-mask');
     const plate = mask.querySelector('.plate');
-    let revealed = false;
     mask.style.setProperty('--cy', cyShare * 100 + '%'); mask.style.setProperty('--cx', cxShare * 100 + '%');
     ScrollTrigger.create({
       trigger: pin, start: 'top top', end: 'bottom bottom', scrub: true,
@@ -133,7 +146,7 @@
         const r0 = startR(w, h), r1 = Math.hypot(Math.max(cx, w - cx), Math.max(cy, h - cy)) + 2;
         const q = p < handover ? 0 : ease(Math.min(1, (p - handover) / (full - handover)));
         mask.style.setProperty('--r', (p < handover ? 0 : r0 + (r1 - r0) * q).toFixed(1) + 'px');
-        if (!revealed && p > handover) { revealed = true; play(plate, plate._parts); }
+        if (!plate._shown && p > handover) { plate._shown = true; play(plate, plate._parts); }
       },
       onLeave() { SCENE[name] = 1; mask.style.setProperty('--r', '200vmax'); },
       onLeaveBack() { SCENE[name] = 0; },
