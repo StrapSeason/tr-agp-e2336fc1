@@ -15,11 +15,12 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
   const S = window.SCENE || {};
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const MOBILE = innerWidth < 700;
-  const DPR = Math.min(devicePixelRatio, MOBILE ? 1.25 : 1.5);
+  const TOUCH = matchMedia('(pointer: coarse)').matches;
+  const DPR = Math.min(devicePixelRatio, TOUCH ? 1 : 1.5);
   let dirty = true, wasEmpty = false;
 
   const makeRenderer = (el) => {
-    const r = new THREE.WebGLRenderer({ canvas: el || undefined, alpha: true, antialias: true, preserveDrawingBuffer: !el });
+    const r = new THREE.WebGLRenderer({ canvas: el || undefined, alpha: true, antialias: !TOUCH, preserveDrawingBuffer: !el });
     r.outputColorSpace = THREE.SRGBColorSpace; r.toneMapping = THREE.ACESFilmicToneMapping;
     r.toneMappingExposure = 1.02; r.setClearColor(0x000000, 0); return r;
   };
@@ -42,7 +43,10 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
   camera.position.set(0, 0, CAMZ);
   const px2w = () => (2 * CAMZ * TAN) / innerHeight;
   const toWorld = (x, y) => { const k = px2w(); return [(x - innerWidth / 2) * k, -(y - innerHeight / 2) * k]; };
+  let lastW = innerWidth, lastH = innerHeight;
   addEventListener('resize', () => {
+    if (TOUCH && innerWidth === lastW && Math.abs(innerHeight - lastH) < 160) return;   // address bar, not a real resize
+    lastW = innerWidth; lastH = innerHeight;
     camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight, false); dirty = true; BG.forEach((b) => (b.key = ''));
   });
@@ -116,17 +120,17 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
     // Props lie on the page like things a child dropped: a loose tilt, partly behind the words, partly out.
     // at: centre on the slide (1920×1080 px) · h: height in slide px (len: length for the tube) · rot: [x, y, z]
     // alpha: first half of the treatment is quieter. pose(e, leave) → small offsets for the one gesture.
-    // 01 · Samat's costume, leaning, its right half behind «POPELIUKH / ( DIRECTOR'S», its left half in the air
-    { n: 1, prop: 'kigurumi', at: [1655, 560], h: 560, rot: [0.1, 0.38, -0.24], alpha: 0.5, play: 'load',
+    // 01 · Samat's costume, leaning in the empty grey field right of the print, its feet behind «POPELIUKH»
+    { n: 1, prop: 'kigurumi', at: [1560, 520], h: 540, rot: [0.1, 0.38, -0.24], alpha: 0.5, play: 'load',
       pose(e, leave) { const t = easeOutCubic(clamp01(e / 1.8)); return { dy: 70 * (1 - t), dz: -0.12 * (1 - t), dyaw: -0.3 * ease(clamp01(leave * 1.6)) }; } },
-    // 03 · the tube, diagonal, crossing the end of «CHALLENGE» and poking out above it
-    { n: 3, prop: 'tube-03', at: [1575, 140], len: 470, rot: [0.3, 0.35, 0.42], alpha: 0.45,
+    // 03 · the tube, diagonal, behind the end of «CHALLENGE», poking up towards the band of eyes
+    { n: 3, prop: 'tube-03', at: [1650, 800], len: 430, rot: [0.3, 0.35, 0.42], alpha: 0.45,
       pose(e) { const t = easeOutCubic(clamp01(e / 1.6)); return { dy: -40 * (1 - t), dz: 0.15 * (1 - t), roll: -0.8 * (1 - t) }; } },
-    // 07 · the backpack tipped on the grass, half under the translucent card
-    { n: 7, prop: 'backpack', at: [1585, 880], h: 300, rot: [0.08, 0.55, 0.3], alpha: 0.8, gate: 'iris',
+    // 07 · the backpack dropped on the empty grass above the children
+    { n: 7, prop: 'backpack', at: [1120, 190], h: 240, rot: [0.08, 0.55, 0.3], alpha: 0.8, gate: 'iris',
       pose(e) { const t = easeOutCubic(clamp01(e / 1.2)); return { dy: -50 * (1 - t), dz: 0.25 * (1 - t) }; } },
-    // 09 · the bucket knocked over on the panel, rim towards the text; «tap it» — it wobbles three times and stops
-    { n: 9, prop: 'bucket', at: [455, 800], h: 300, rot: [0.22, 0.45, -1.2], alpha: 0.8,
+    // 09 · the bucket knocked over on the empty paper under the text; «tap it» — it wobbles three times and stops
+    { n: 9, prop: 'bucket', at: [1480, 830], h: 280, rot: [0.22, 0.45, -1.2], alpha: 0.7,
       pose(e) { const t = clamp01(e / 1.3); return { dz: Math.sin(t * Math.PI * 6) * (1 - t) * 0.07 }; } },
   ];
   const tileCam = new THREE.PerspectiveCamera(FOV, 1920 / 1080, 1, 100000);
@@ -142,7 +146,7 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
   function drawTile(b, e, leave) {
     const p = inst[b.prop]; if (!p) return;
     const W = Math.max(2, Math.round(b.plate.clientWidth * DPR)), H = Math.max(2, Math.round(b.plate.clientHeight * DPR));
-    const q = REDUCED ? b.pose(99, 0) : b.pose(e, leave);
+    const q = REDUCED ? b.pose(99, 0) : b.pose(e, TOUCH ? 0 : leave);
     const key = [W, H, (q.dy || 0).toFixed(1), (q.dz || 0).toFixed(3), (q.dyaw || 0).toFixed(3), (q.roll || 0).toFixed(3)].join();
     if (key === b.key) return;                                  // nothing moved: keep the last frame
     b.key = key;
@@ -154,9 +158,9 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
     p.pivot.rotation.set(b.rot[0], b.rot[1] + (q.dyaw || 0), b.rot[2] + (q.dz || 0));
     if (b.len) p.pivot.rotation.z += Math.PI / 2;               // the tube model stands up; lay it down first
     if (b.len) p.pivot.children[0].rotation.y = q.roll || 0;
-    tiles.setSize(W, H, false);
+    const d = tiles.domElement; if (d.width !== W || d.height !== H) tiles.setSize(W, H, false);
     tiles.render(tileScene, tileCam);
-    b.cv.width = W; b.cv.height = H;
+    if (b.cv.width !== W || b.cv.height !== H) { b.cv.width = W; b.cv.height = H; }
     b.ctx.clearRect(0, 0, W, H); b.ctx.drawImage(tiles.domElement, 0, 0);
   }
 
@@ -167,15 +171,15 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
     const [wx, wy] = toWorld(x, y); p.pivot.position.set(wx, wy, 0); p.pivot.scale.setScalar(sizePx * px2w());
   }
   const plate6 = document.querySelector('.plate[data-n="6"]');
-  // 06 · the tube rests across the white band under the photos; as the slide leaves it rises into the iris
+  // 06 · the tube rests on the paper under «FEEL», over the empty fourth column; as the slide leaves it rises into the iris
   function tube06(r, e, leave) {
     const p = show('tube-06'); if (!p) return;
     const k = r.width / 1920;
     const settle = REDUCED ? 0 : 40 * (1 - easeOutCubic(clamp01(e / 1.2)));
     const up = ease(clamp01((leave - 0.3) / 0.6));
-    place(p, r.left + 1170 * k, r.top + (722 - settle - up * 330) * k, (360 + up * 60) * k);
+    place(p, r.left + 1640 * k, r.top + (775 - settle - up * 330) * k, (360 + up * 60) * k);
     p.pivot.rotation.set(0.35 + up * (Math.PI / 2 - 0.35), 0.2 * (1 - up), Math.PI / 2 * (1 - up));
-    if (!up) { const [wx, wy] = toWorld(r.left + 1170 * k, r.top + 772 * k); p.shadow.visible = true;
+    if (!up) { const [wx, wy] = toWorld(r.left + 1640 * k, r.top + 822 * k); p.shadow.visible = true;
       p.shadow.position.set(wx, wy, -0.5); p.shadow.material.opacity = 0.28; p.shadow.scale.set(400 * k * px2w(), 34 * k * px2w(), 1); }
   }
   // iris: the tube from 06 comes down to the centre, turns its bore to us, and we fly through it into 07
@@ -196,14 +200,16 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
     if (!name) return;
     const p = show(name); if (!p) return;
     p.pivot.rotation.order = 'ZXY';
-    const face = name === 'bucket-rhyme' ? Math.max(p.size.x, p.size.z) * 0.72 : Math.max(p.size.x, p.size.z);
-    place(p, ring.x, ring.y, (ring.r * 2) / face);
+    const face = name === 'bucket-rhyme' ? Math.max(p.size.x, p.size.z) * 0.9 : Math.max(p.size.x, p.size.z);
+    // tube and bucket turn in the middle of the screen; the cap slides over onto the GIF on the right
+    const m = S.rhymeMid ? S.rhymeMid() : ring, t = ease(clamp01((pr - 0.5) / 0.22));
+    place(p, m.x + (ring.x - m.x) * t, ring.y, (ring.r * 2) / face);
     p.pivot.rotation.set(Math.PI / 2 - (name === 'cap' ? 0 : 0.06), 0, pr * Math.PI * 1.6);
   }
 
   /* ---------- loop ---------- */
   const irisPin = document.querySelector('.pin--iris'), rhymePin = document.querySelector('.pin--rhyme');
-  let t06 = null;
+  let t06 = null, lastKey = '';
   function frame() {
     requestAnimationFrame(frame);
     // background tiles: start the gesture when the slide is 20 % in (the cover on load), redraw only while it changes
@@ -226,6 +232,10 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
       if (rhymePin && inView(rhymePin) && S.rhyme > 0 && S.rhyme < 1) { rhyme(S.rhyme); any = true; behind = true; }
     }
     const z = behind ? '0' : '3'; if (canvas.style.zIndex !== z) canvas.style.zIndex = z;
+    const key = [r6 ? Math.round(r6.top) : '', t06 !== null && performance.now() - t06 < 1300 ? performance.now() : '',
+      (S.iris || 0).toFixed(4), (S.rhyme || 0).toFixed(4), innerWidth, innerHeight, Object.keys(inst).length].join();
+    if (any && !dirty && key === lastKey) return;           // same picture as the last frame
+    lastKey = key;
     if (any) { renderer.render(stageScene, camera); wasEmpty = false; }
     else if (!wasEmpty || dirty) { renderer.clear(); wasEmpty = true; }
     dirty = false;

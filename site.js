@@ -16,13 +16,28 @@
     }
   }
   fit();
-  addEventListener('resize', () => { fit(); window.ScrollTrigger && ScrollTrigger.refresh(); });
+  // phones change the height while scrolling (address bar): only a new width re-fits and re-measures
+  let lastW = innerWidth;
+  addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth;
+    fit(); window.ScrollTrigger && ScrollTrigger.refresh(); });
 
   /* ---------- 1b. mark text so it always sits above the background props (also with reduced motion) ---------- */
   document.querySelectorAll('.plate .slide .abs').forEach((el) => {
     if (/^(IMG|VIDEO|CANVAS)$/.test(el.tagName) || el.classList.contains('ring') || el.closest('.card')) return;
     if (el.textContent.trim()) el.classList.add('txt');
   });
+
+  /* ---------- 1b'. the mini cover on the «turn your phone» screen: scale it, size the upright pose to fit ---------- */
+  function fitMini() {
+    const rot = document.querySelector('.rotate'), mini = rot && rot.querySelector('.mini'); if (!mini) return;
+    const stage = rot.querySelector('.rotate__stage');
+    const w = Math.min(innerWidth - 48, 420);                          // landscape pose: full width of the screen
+    const h = w * 9 / 16, sh = stage.clientHeight || innerHeight * 0.55;
+    const s1 = Math.min((sh * 0.9) / w, (innerWidth - 48) / h);        // upright pose: as tall as the stage allows
+    mini.style.setProperty('--mw', w + 'px'); mini.style.setProperty('--s1', s1.toFixed(3));
+    mini.style.setProperty('--k', (w / 1920).toFixed(5));
+  }
+  fitMini(); addEventListener('resize', fitMini);
 
   /* ---------- 1c. phones held upright: the «turn your phone» screen shows once, at the start ---------- */
   const land = matchMedia('(orientation: landscape)');
@@ -41,6 +56,7 @@
 
   if (REDUCED || !window.gsap) return;          // everything is already visible; no pins, no smooth scroll
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   /* ---------- 3. smooth scroll ---------- */
   if (window.Lenis) {
@@ -102,18 +118,19 @@
 
   /* ---------- 6. pinned scenes: progress → CSS circle + stage ---------- */
   const ease = gsap.parseEase('power2.in');
-  function pinScene(sel, name, handover, cyShare, startR, full = 1) {
+  function pinScene(sel, name, handover, cyShare, startR, full = 1, cxShare = 0.5) {
     const pin = document.querySelector(sel); if (!pin) return;
     const mask = pin.querySelector('.iris-mask, .rhyme-mask');
     const plate = mask.querySelector('.plate');
     let revealed = false;
-    mask.style.setProperty('--cy', cyShare * 100 + '%');
+    mask.style.setProperty('--cy', cyShare * 100 + '%'); mask.style.setProperty('--cx', cxShare * 100 + '%');
     ScrollTrigger.create({
       trigger: pin, start: 'top top', end: 'bottom bottom', scrub: true,
       onUpdate(self) {
         const p = self.progress; SCENE[name] = p;
         const w = mask.clientWidth, h = mask.clientHeight;
-        const r0 = startR(w, h), r1 = Math.hypot(w, h) * 0.56;
+        const cx = w * cxShare, cy = h * cyShare;   // open until the farthest corner is inside the circle
+        const r0 = startR(w, h), r1 = Math.hypot(Math.max(cx, w - cx), Math.max(cy, h - cy)) + 2;
         const q = p < handover ? 0 : ease(Math.min(1, (p - handover) / (full - handover)));
         mask.style.setProperty('--r', (p < handover ? 0 : r0 + (r1 - r0) * q).toFixed(1) + 'px');
         if (!revealed && p > handover) { revealed = true; play(plate, plate._parts); }
@@ -124,12 +141,17 @@
   }
   // iris: the tube's bore (≈30 % of the viewport height across) opens into the park — slide 07
   pinScene('.pin--iris', 'iris', 0.45, 0.5, (w, h) => innerHeight * 0.13, 0.9);   // fully open by .9, before the tube leaves
-  // rhyme: tube → bucket → cap; the cap's circle becomes slide 11's GIF circle (centre y = 446/1080, r = 350/1920 of the width)
-  pinScene('.pin--rhyme', 'rhyme', 0.74, 446 / 1080, (w) => (350 / 1920) * w);
+  // rhyme: tube → bucket → cap; the cap's circle opens onto slide 11's GIF (the tall picture on the right: centre 1535×540, half-width 385)
+  pinScene('.pin--rhyme', 'rhyme', 0.74, 540 / 1080, (w) => (385 / 1920) * w, 0.95, 1535 / 1920);
   window.SCENE.rhymeRing = () => {
     const m = document.querySelector('.rhyme-mask'); if (!m) return null;
     const r = m.getBoundingClientRect();
-    return { x: r.left + r.width / 2, y: r.top + r.height * (446 / 1080), r: (350 / 1920) * r.width };
+    return { x: r.left + r.width * (1535 / 1920), y: r.top + r.height / 2, r: (385 / 1920) * r.width };
+  };
+  window.SCENE.rhymeMid = () => {
+    const m = document.querySelector('.rhyme-mask'); if (!m) return null;
+    const r = m.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
   };
   window.SCENE.irisCenter = () => {
     const m = document.querySelector('.iris-mask'); if (!m) return null;
